@@ -4,24 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" href="assets/img/logo-bege.png">
+    <link rel="icon" href="assets/img/logo-blue.png">
+    <script src="https://kit.fontawesome.com/ac1aaaa398.js" crossorigin="anonymous"></script>
     <title>Easy List</title>
 </head>
 <body>
     <header>
-        <img src="assets/img/logo-gray.png" alt="" class="logo">
+        <i class="fa-solid fa-paperclip"></i>
         <h1>Easy List</h1>
     </header>
     <main>
         <section id="sec-add-item">
-            <div>
+            <div class="div-title" onclick="bandeja()">
+                <h2>Adicionar tarefas</h2>
+            </div>
+            <div class="container">
                 <div class="div-input">
-                    <input id="text-input" type="text" placeholder="Adicionar uma tarefa">
-                    <input type="checkbox" id="check-input">
+                    <input type="text" class="text-input" id='text-input' placeholder="Adicionar uma tarefa" maxlength="35">
+                    <input type="checkbox" class="check-input" id="check-input" onclick="verificar()" disabled>
+                    <input type="date" class="date-input" id="date-input">
                 </div>
-                <button>Adicionar</button>
+                <button onclick="adicionar()">Adicionar</button>
             </div>
         </section>
+        <section id="sec-a-fazer">
+            <div class="div-title" onclick="bandeja('sec-a-fazer')">
+                <i class="fa-solid fa-chevron-right icone-bandeja" id="icone-bandeja-sec-a-fazer"></i>
+                <h2>Tarefas a fazer</h2>
+            </div>
+            <div class="div-lista" id="div-lista-sec-a-fazer">
+                <p>Nenhuma informação encontrada</p>
+            </div>
+            <div class="linha"></div>
+        </section>
+        <section id="sec-concluidas">
+            <div class="div-title" onclick="bandeja('sec-concluidas')">
+                <i class="fa-solid fa-chevron-right icone-bandeja" id="icone-bandeja-sec-concluidas"></i>
+                <h2>Tarefas concluídas</h2>
+            </div>
+            <div class="div-lista" id='div-lista-sec-concluidas'>
+                <p>Nenhuma informação encontrada</p>
+            </div>
+            <div class="linha"></div>
+        </section>
+
+        <script src="app.js"></script>
     </main>
 </body>
 </html>
