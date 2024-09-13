@@ -37,7 +37,7 @@ function adicionar() {
             mensagem += `
                 <div class="div-input" id='div-input${contador}'>
                     <input type="text" class='text-input' id="text-input${contador}" value='${tarefa.nome}' disabled>
-                    <input type="checkbox" class='check-input' id="check-input${contador}" onclick="verificar()">
+                    <input type="checkbox" class='check-input' id="check-input${contador}" onclick="verificar(${contador})">
                     <input type="date" class='date-input' id="date-input${contador}" value='${tarefa.data}' disabled>
                     <i class="fa-solid fa-pen-to-square" id='edit-icon${contador}' onclick='editar(${contador})'></i>
                     <i class="fa-regular fa-trash-can" onclick='deletar(${contador})'></i>
@@ -60,20 +60,45 @@ function editar(id) {
         dataTarefa.style.right = '';
         descricaoTarefa.disabled = true;
         dataTarefa.disabled = true;
-        editarIcon.classList.remove('fa-square-check');
+        editarIcon.classList.remove('fa-check');
         editarIcon.classList.add('fa-pen-to-square');
     } else {
         dataTarefa.style.right = '80px';
         descricaoTarefa.disabled = false;
         dataTarefa.disabled = false;
         editarIcon.classList.remove('fa-pen-to-square');
-        editarIcon.classList.add('fa-square-check');
+        editarIcon.classList.add('fa-check');
     }
 }
 
-function verificar() {
-    for (let tarefa of tarefas) {
+function verificar(id) {
+    let divListaFazer = document.getElementById('div-lista-sec-a-fazer');
+    let divListaConcluidas = document.getElementById('div-lista-sec-concluidas');
+    let divInput = document.getElementById('div-input'+id);
+    let checkInput = document.getElementById('check-input'+id);
 
+    if (divListaConcluidas.innerHTML.trim() === `<p>Nenhuma tarefa disponível</p>`) {
+        divListaConcluidas.innerHTML = ``;
+    }
+
+    if (checkInput.checked) {
+        divListaConcluidas.appendChild(divInput);
+        divInput.style.opacity = 0.8;
+    } else {
+        divListaFazer.appendChild(divInput);
+        divInput.style.opacity = 1;
+    }
+
+
+    if (divListaFazer.innerHTML.trim() === '') {
+        divListaFazer.innerHTML = `
+            <p>Nenhuma tarefa disponível</p>
+        `;
+    }
+    if (divListaConcluidas.innerHTML.trim() === '') {
+        divListaConcluidas.innerHTML = `
+            <p>Nenhuma tarefa disponível</p>
+        `
     }
 }
 
@@ -81,4 +106,17 @@ function deletar(id) {
     let divInput = document.getElementById('div-input'+id);
     divInput.remove();
     tarefas.splice(1,id)
+
+    let divListaFazer = document.getElementById('div-lista-sec-a-fazer');
+    let divListaConcluidas = document.getElementById('div-lista-sec-concluidas');
+    if (divListaFazer.innerHTML.trim() === '') {
+        divListaFazer.innerHTML = `
+            <p>Nenhuma tarefa disponível</p>
+        `;
+    }
+    if (divListaConcluidas.innerHTML.trim() === '') {
+        divListaConcluidas.innerHTML = `
+            <p>Nenhuma tarefa disponível</p>
+        `
+    }
 }
