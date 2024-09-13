@@ -35,12 +35,12 @@ function adicionar() {
         for (let tarefa of tarefas) {
             contador++
             mensagem += `
-                <div class="div-input">
+                <div class="div-input" id='div-input${contador}'>
                     <input type="text" class='text-input' id="text-input${contador}" value='${tarefa.nome}' disabled>
                     <input type="checkbox" class='check-input' id="check-input${contador}" onclick="verificar()">
                     <input type="date" class='date-input' id="date-input${contador}" value='${tarefa.data}' disabled>
-                    <i class="fa-solid fa-pen-to-square" onclick='editar(${contador})'></i>
-                    <i class="fa-regular fa-trash-can" onclick='deletar()'></i>
+                    <i class="fa-solid fa-pen-to-square" id='edit-icon${contador}' onclick='editar(${contador})'></i>
+                    <i class="fa-regular fa-trash-can" onclick='deletar(${contador})'></i>
                 </div>
             `
         }
@@ -54,15 +54,20 @@ function adicionar() {
 function editar(id) {
     let descricaoTarefa = document.getElementById('text-input'+id);
     let dataTarefa = document.getElementById('date-input'+id);
+    let editarIcon = document.getElementById('edit-icon'+id);
 
     if (descricaoTarefa.disabled === false || dataTarefa.disabled === false) {
         dataTarefa.style.right = '';
         descricaoTarefa.disabled = true;
         dataTarefa.disabled = true;
+        editarIcon.classList.remove('fa-square-check');
+        editarIcon.classList.add('fa-pen-to-square');
     } else {
         dataTarefa.style.right = '80px';
         descricaoTarefa.disabled = false;
         dataTarefa.disabled = false;
+        editarIcon.classList.remove('fa-pen-to-square');
+        editarIcon.classList.add('fa-square-check');
     }
 }
 
@@ -72,6 +77,8 @@ function verificar() {
     }
 }
 
-function detelar() {
-
+function deletar(id) {
+    let divInput = document.getElementById('div-input'+id);
+    divInput.remove();
+    tarefas.splice(1,id)
 }
