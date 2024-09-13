@@ -90,12 +90,12 @@ function verificar(id) {
     }
 
 
-    if (divListaFazer.innerHTML.trim() === '') {
+    if (divListaFazer.childElementCount === 0) {
         divListaFazer.innerHTML = `
             <p>Nenhuma tarefa disponível</p>
         `;
     }
-    if (divListaConcluidas.innerHTML.trim() === '') {
+    if (divListaConcluidas.childElementCount === 0) {
         divListaConcluidas.innerHTML = `
             <p>Nenhuma tarefa disponível</p>
         `
@@ -105,7 +105,7 @@ function verificar(id) {
 function deletar(id) {
     let divInput = document.getElementById('div-input'+id);
     divInput.remove();
-    tarefas.splice(1,id)
+    tarefas.splice(id-1,1)
 
     let divListaFazer = document.getElementById('div-lista-sec-a-fazer');
     let divListaConcluidas = document.getElementById('div-lista-sec-concluidas');

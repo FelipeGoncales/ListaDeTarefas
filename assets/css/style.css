@@ -130,7 +130,7 @@ section {
 .check-input {
     position: absolute;
     left: 15px;
-    background-color: #e3b35b;
+    cursor: pointer;
     &[disabled] {
         cursor: not-allowed;
     }
@@ -185,8 +185,4 @@ section {
     margin-top: 4px;
     background-color: var(--cor-principal);
     border-radius: 100px;
-}
-
-.tarefa-concluida {
-    background-color: red;
 }
