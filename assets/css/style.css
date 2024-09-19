@@ -56,13 +56,19 @@ section {
     }
 }
 
-form {
+.div-inputs {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-ul, #ul1, #ul2 {
+ul {
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+} 
+
+#ul1, #ul2 {
     display: none;
 }
 
@@ -87,6 +93,9 @@ input {
     font-size: 0.7rem;
     &[type='text'] {
         width: 250px;
+        &:disabled {
+            background-color: var(--cor-secundaria);
+        }
     }
     &[type='date'] {
         font-size: 0.63rem;
@@ -102,7 +111,11 @@ input {
     gap: 10px;
     cursor: pointer;
     & .fa-chevron-right {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
         color: var(--cor-principal);
     }
+}
+
+.mensagem-vazio {
+    font-size: 0.85rem;
 }

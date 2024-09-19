@@ -16,28 +16,32 @@
     <main>
         <section>
             <h2>Adicionar tarefa</h2>
-            <form>
+            <div class="div-inputs">
                 <div class="container">
                     <input type="checkbox" disabled id="check-input">
                     <input type="text" placeholder="Título da tarefa" id="text-input">
                     <input type="date" id="date-input">
                 </div>
                 <input id="btn-submit" type="submit">
-            </form>
+            </div>
         </section>
         <section>
             <div class="div-title" id="div-title1" onclick="bandeja(1)">
                 <i class="fa-solid fa-chevron-right" id="seta1"></i>
                 <h2>Tarefas pendentes</h2>
             </div>
-            <ul id="ul1">aodasdaksd</ul>
+            <ul id="ul1">
+                <p class="mensagem-vazio" id="mensagem-vazio1">Sem informações</p>
+            </ul>
         </section>
         <section>
             <div class="div-title" id="div-title2" onclick="bandeja(2)">
                 <i class="fa-solid fa-chevron-right" id="seta2"></i>
                 <h2>Tarefas concluídas</h2>
             </div>
-            <ul id="ul2">aodasdaksd</ul>
+            <ul id="ul2">
+                <p class="mensagem-vazio" id="mensagem-vazio1">Sem informações</p>
+            </ul>
         </section>
     </main>
     <script src="app.js"></script>
