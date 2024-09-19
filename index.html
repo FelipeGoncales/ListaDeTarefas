@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br" dir="ltr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,48 +7,39 @@
     <link rel="icon" href="assets/img/logo-blue.png">
     <script src="https://kit.fontawesome.com/ac1aaaa398.js" crossorigin="anonymous"></script>
     <title>Easy List</title>
-</head>
+</head> 
 <body>
     <header>
         <i class="fa-solid fa-paperclip"></i>
         <h1>Easy List</h1>
     </header>
     <main>
-        <section id="sec-add-item">
-            <div class="div-title" onclick="bandeja()">
-                <h2>Adicionar tarefas</h2>
-            </div>
-            <div class="container">
-                <div class="div-input">
-                    <input type="text" class="text-input" id='text-input' placeholder="Adicionar uma tarefa" maxlength="35">
-                    <input type="checkbox" class="check-input" id="check-input" onclick="verificar()" disabled>
-                    <input type="date" class="date-input" id="date-input">
+        <section>
+            <h2>Adicionar tarefa</h2>
+            <form>
+                <div class="container">
+                    <input type="checkbox" disabled id="check-input">
+                    <input type="text" placeholder="Título da tarefa" id="text-input">
+                    <input type="date" id="date-input">
                 </div>
-                <button onclick="adicionar()">Adicionar</button>
-            </div>
+                <input id="btn-submit" type="submit">
+            </form>
         </section>
-        <section id="sec-a-fazer">
-            <div class="div-title" onclick="bandeja('sec-a-fazer')">
-                <i class="fa-solid fa-chevron-right icone-bandeja" id="icone-bandeja-sec-a-fazer"></i>
-                <h2>Tarefas a fazer</h2>
+        <section>
+            <div class="div-title" id="div-title1" onclick="bandeja(1)">
+                <i class="fa-solid fa-chevron-right" id="seta1"></i>
+                <h2>Tarefas pendentes</h2>
             </div>
-            <div class="div-lista" id="div-lista-sec-a-fazer">
-                <p>Nenhuma tarefa disponível</p>
-            </div>
-            <div class="linha"></div>
+            <ul id="ul1">aodasdaksd</ul>
         </section>
-        <section id="sec-concluidas">
-            <div class="div-title" onclick="bandeja('sec-concluidas')">
-                <i class="fa-solid fa-chevron-right icone-bandeja" id="icone-bandeja-sec-concluidas"></i>
+        <section>
+            <div class="div-title" id="div-title2" onclick="bandeja(2)">
+                <i class="fa-solid fa-chevron-right" id="seta2"></i>
                 <h2>Tarefas concluídas</h2>
             </div>
-            <div class="div-lista" id='div-lista-sec-concluidas'>
-                <p>Nenhuma tarefa disponível</p>
-            </div>
-            <div class="linha"></div>
+            <ul id="ul2">aodasdaksd</ul>
         </section>
-
-        <script src="app.js"></script>
     </main>
+    <script src="app.js"></script>
 </body>
 </html>
