@@ -32,19 +32,26 @@ header {
     color: var(--cor-secundaria);
 }
 
+main {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
 section {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 15px;
-    padding: 50px 0;
     & h2 {
         font-size: 1rem;
     }
 }
 
 .container {
+    max-width: 450px;
     border-radius: 7px;
     padding: 15px 20px;
     box-shadow: 0 2px 10px rgba(15, 1, 57, 0.3);
@@ -56,6 +63,10 @@ section {
     }
 }
 
+li {
+
+}
+
 .div-inputs {
     display: flex;
     flex-direction: column;
@@ -65,6 +76,8 @@ section {
 ul {
     display: none;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: 15px;
 } 
 
@@ -91,11 +104,9 @@ ul {
 input {
     outline: none;
     font-size: 0.7rem;
+    background-color: var(--cor-secundaria);
     &[type='text'] {
         width: 250px;
-        &:disabled {
-            background-color: var(--cor-secundaria);
-        }
     }
     &[type='date'] {
         font-size: 0.63rem;
@@ -104,10 +115,20 @@ input {
         cursor: not-allowed;
     }
 }
+
+.fa-trash-can, .fa-pen-to-square, .fa-check {
+    font-size: 0.75rem;
+    transition: 0.25s;
+    cursor: pointer;
+    &:hover {
+        scale: 1.2;
+    }
+}
     
 .div-title {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 10px;
     cursor: pointer;
     & .fa-chevron-right {
@@ -117,5 +138,5 @@ input {
 }
 
 .mensagem-vazio {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
 }
