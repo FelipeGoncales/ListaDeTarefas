@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const btnSubmit = document.getElementById('btn-submit');
+    document.addEventListener('selectstart', function(e) {
+        e.preventDefault();
+    });
 
+    let btnSubmit = document.getElementById('btn-submit')
     btnSubmit.addEventListener('click', () => {
         const nome = document.getElementById('text-input').value.trim();
         const data = document.getElementById('date-input').value.trim();
@@ -21,27 +24,23 @@ document.addEventListener('DOMContentLoaded', () => {
             checkInput.addEventListener('click', function() {
                 let ulTarefas = document.getElementById('ul1');
                 let ulConcluidas = document.getElementById('ul2');
+
                 let li = this.parentNode;
                 if (this.checked) {
                     ulConcluidas.appendChild(li);
                 } else {
                     ulTarefas.appendChild(li)
                 }
-                // Adicionar mensagem a ul concluídas caso ela esteja vazia 
-                if (ulConcluidas.firstElementChild.nodeName === 'P') {
-                    ulConcluidas.firstElementChild.remove()
-                }
-                // Adicionar mensagem a ul tarefas caso ela esteja vazia 
-                if (ulTarefas.firstElementChild.nodeName === 'P') {
-                    ulTarefas.firstElementChild.remove()
-                }
 
-                if (ulTarefas.length === 0) {
-                    addMensagem('ul1');
+                if (ulTarefas.children.length === 0) {
+                    addMensagem(ulTarefas.id);
                 }
-                if (ulConcluidas.length === 0) {
-                    addMensagem('ul2')
+                if (ulConcluidas.children.length === 0) {
+                    addMensagem(ulConcluidas.id)
                 } 
+
+                removeMensagem(ulTarefas.id);
+                removeMensagem(ulConcluidas.id);
             })
 
             let dateInput = document.createElement('input');
@@ -52,10 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
             let lixeiraIcon = document.createElement('i');
             lixeiraIcon.classList.add('fa-regular', "fa-trash-can");
             lixeiraIcon.addEventListener("click", function() {
-                this.parentNode.remove();
-                let ul = document.getElementById('ul1');
+                let li = this.parentNode;
+                let ul = li.parentNode;
+                li.remove();
                 if (ul.children.length === 0) {
-                    addMensagem('ul1');
+                    addMensagem(ul.id);
                 }
             })
 
@@ -86,17 +86,33 @@ document.addEventListener('DOMContentLoaded', () => {
             if (ul.firstElementChild.nodeName === 'P') {
                 ul.firstElementChild.remove();
             }
+
+            let ulDisplay = window.getComputedStyle(ul).display;
+            let seta = document.getElementById('seta1');
+            if (ulDisplay == 'none') {
+                ul.style.display = 'flex';
+                seta1.style.transform = 'rotate(90deg)';
+            }
         }
     });
 });
 
-function addMensagem(ul) {
-    let ulTag = document.getElementById(ul);
+function removeMensagem(ulId) {
+    const ul = document.getElementById(ulId);
+    const p = ul.querySelector('.mensagem-vazio');
+    if (ul.children.length > 1 && p) {
+        p.remove()
+    }
+}
 
-    let p = document.createElement('p');
-    p.innerText = 'Nenhuma tarefa encontrada';
-    p.classList.add('mensagem-vazio');
-    ulTag.appendChild(p);
+function addMensagem(ulId) {
+    const ul = document.getElementById(ulId);
+    if (ul.children.length === 0) {
+        const p = document.createElement('p');
+        p.innerText = 'Nenhuma tarefa encontrada';
+        p.classList.add('mensagem-vazio');
+        ul.appendChild(p);
+    }
 }
 
 function bandeja(n) {

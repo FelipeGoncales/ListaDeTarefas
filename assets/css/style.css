@@ -94,7 +94,7 @@ ul {
     border-radius: 7px;
     border: 2px var(--cor-principal) solid;
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.1s;
     &:hover {
         color: var(--cor-secundaria);
         background-color: var(--cor-principal);
@@ -111,8 +111,11 @@ input {
     &[type='date'] {
         font-size: 0.63rem;
     }
-    &[type='checkbox']:disabled {
-        cursor: not-allowed;
+    &[type='checkbox'] {
+        cursor: pointer;
+        &:disabled {
+            cursor: not-allowed;
+        }  
     }
 }
 
