@@ -6,13 +6,18 @@
     margin: 0;
     text-decoration: none;
     box-sizing: border-box;
-    font-size: 25px;
+    font-size: 22px;
     border: none;
 }
 
 :root {
     --cor-principal: #0f0139;
     --cor-secundaria: #FFFFFF;
+    --bg-color: #f3f3f3;
+}
+
+body {
+    background-color: var(--bg-color);
 }
 
 header {
@@ -51,15 +56,16 @@ section {
 }
 
 .container {
+    background-color: var(--cor-secundaria);
     max-width: 450px;
     border-radius: 7px;
     padding: 15px 20px;
     box-shadow: 0 2px 10px rgba(15, 1, 57, 0.3);
     display: flex;
     gap: 12px;
-    transition: scale 0.3s;
+    transition: 0.05s;
     &:hover {
-        scale: 1.05;
+        background-color: var(--bg-color);
     }
 }
 
@@ -104,7 +110,7 @@ ul {
 input {
     outline: none;
     font-size: 0.7rem;
-    background-color: var(--cor-secundaria);
+    background-color: inherit;
     &[type='text'] {
         width: 250px;
     }
@@ -121,7 +127,7 @@ input {
 
 .fa-trash-can, .fa-pen-to-square, .fa-check {
     font-size: 0.75rem;
-    transition: 0.25s;
+    transition: 0.2s;
     cursor: pointer;
     &:hover {
         scale: 1.2;
