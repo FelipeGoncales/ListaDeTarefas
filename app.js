@@ -2,8 +2,18 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('selectstart', function(e) {
         e.preventDefault();
     });
+    const btnLimpar = document.getElementById('btn-limpar');
+    btnLimpar.addEventListener('click', function() {
+        const ulConcluidas = document.getElementById('ul2');
+        const lis = ulConcluidas.querySelectorAll('li');
+        lis.forEach(function(li) {
+            li.remove()
+        })
+        this.style.display = 'none';
+        addMensagem(ulConcluidas.id);
+    })
 
-    let btnSubmit = document.getElementById('btn-submit')
+    const btnSubmit = document.getElementById('btn-submit')
     btnSubmit.addEventListener('click', () => {
         const nome = document.getElementById('text-input').value.trim();
         const data = document.getElementById('date-input').value.trim();
@@ -14,22 +24,32 @@ document.addEventListener('DOMContentLoaded', () => {
             const ul = document.getElementById('ul1');
             const li = document.createElement('li');
 
-            let textInput = document.createElement('input');
+            const textInput = document.createElement('input');
             textInput.type = 'text';
             textInput.value = nome;
             textInput.disabled = true;
 
-            let checkInput = document.createElement('input');
+            const checkInput = document.createElement('input');
             checkInput.type = 'checkbox';
             checkInput.addEventListener('click', function() {
-                let ulTarefas = document.getElementById('ul1');
-                let ulConcluidas = document.getElementById('ul2');
+                const ulTarefas = document.getElementById('ul1');
+                const ulConcluidas = document.getElementById('ul2');
+                const li = this.parentNode;
 
-                let li = this.parentNode;
+                const textInput = li.querySelector('input[type="text"');
+                const btnLimpar = document.getElementById('btn-limpar');
                 if (this.checked) {
                     ulConcluidas.appendChild(li);
+                    textInput.style.textDecoration = 'line-through';
+                    if (ulConcluidas.style.display === 'flex') {
+                        btnLimpar.style.display = 'block';
+                    }
                 } else {
-                    ulTarefas.appendChild(li)
+                    ulTarefas.appendChild(li);
+                    textInput.style.textDecoration = '';
+                    if (ulConcluidas.querySelectorAll('li').length === 0) {
+                        btnLimpar.style.display = 'none';
+                    }
                 }
 
                 if (ulTarefas.children.length === 0) {
@@ -43,29 +63,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 removeMensagem(ulConcluidas.id);
             })
 
-            let dateInput = document.createElement('input');
+            const dateInput = document.createElement('input');
             dateInput.type = 'date';
             dateInput.value = data;
             dateInput.disabled = true;
 
-            let lixeiraIcon = document.createElement('i');
+            const lixeiraIcon = document.createElement('i');
             lixeiraIcon.classList.add('fa-regular', "fa-trash-can");
             lixeiraIcon.addEventListener("click", function() {
-                let li = this.parentNode;
-                let ul = li.parentNode;
+                const li = this.parentNode;
+                const ul = li.parentNode;
+                const btnLimpar = document.getElementById('btn-limpar');
+
                 li.remove();
                 if (ul.children.length === 0) {
                     addMensagem(ul.id);
+                    btnLimpar.style.display = 'none';
                 }
             })
 
-            let editIcon = document.createElement('i');
+            const editIcon = document.createElement('i');
             editIcon.classList.add('fa-solid', 'fa-pen-to-square');
             editIcon.addEventListener('click', function() {
-                let icon = this;
-                let li = icon.parentNode;
-                let inputText = li.querySelector('input[type="text"]');
-                let inputDate = li.querySelector('input[type="date"]');
+                const icon = this;
+                const li = icon.parentNode;
+                const inputText = li.querySelector('input[type="text"]');
+                const inputDate = li.querySelector('input[type="date"]');
+                const btnLimapr = document.getElementById('btn-limpar');
 
                 if (inputText.disabled === true || inputDate.disabled === true) {
                     inputText.disabled = false;
@@ -87,8 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 ul.firstElementChild.remove();
             }
 
-            let ulDisplay = window.getComputedStyle(ul).display;
-            let seta = document.getElementById('seta1');
+            const ulDisplay = window.getComputedStyle(ul).display;
+            const seta = document.getElementById('seta1');
             if (ulDisplay == 'none') {
                 ul.style.display = 'flex';
                 seta1.style.transform = 'rotate(90deg)';
@@ -117,15 +141,30 @@ function addMensagem(ulId) {
 
 function bandeja(n) {
     const ul = document.getElementById('ul' + n);
+    const p = ul.querySelector('.mensagem-vazio');
     const seta = document.getElementById('seta' + n);
 
     const ulDisplay = window.getComputedStyle(ul).display;
+    const btnLimpar = document.getElementById('btn-limpar')
 
-    if (ulDisplay == 'none') {
-        ul.style.display = 'flex';
-        seta.style.transform = 'rotate(90deg)';
+    if (n == 2 && (ul.querySelectorAll('li').length > 0)) {
+        if (ulDisplay == 'none') {
+            ul.style.display = 'flex';
+            seta.style.transform = 'rotate(90deg)';
+            btnLimpar.style.display = 'block';
+        } else {
+            ul.style.display = 'none';
+            seta.style.transform = 'rotate(0)';
+            btnLimpar.style.display = 'none';
+        }
     } else {
-        ul.style.display = 'none';
-        seta.style.transform = 'rotate(0)';
+        btnLimpar.style.display = 'none';   
+        if (ulDisplay == 'none') {
+            ul.style.display = 'flex';
+            seta.style.transform = 'rotate(90deg)';
+        } else {
+            ul.style.display = 'none';
+            seta.style.transform = 'rotate(0)';
+        }
     }
 }
