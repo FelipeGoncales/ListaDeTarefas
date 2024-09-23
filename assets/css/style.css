@@ -20,21 +20,7 @@ body {
     background-color: var(--bg-color);
     padding-bottom: 50px;
     overflow-y: scroll;
-}
-
-ul::-webkit-scrollbar {
-    width: 8px;  /* Largura da barra de rolagem */
-}
-
-ul::-webkit-scrollbar-thumb {
-    background-color: #888;  /* Cor da barra */
-    border-radius: 10px;     /* Borda arredondada */
-}
-
-ul::-webkit-scrollbar-thumb:hover {
-    background-color: #555;  /* Cor ao passar o mouse */
-}
-
+} 
 
 header {
     display: flex;
