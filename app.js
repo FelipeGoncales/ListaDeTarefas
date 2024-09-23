@@ -89,16 +89,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 const li = icon.parentNode;
                 const inputText = li.querySelector('input[type="text"]');
                 const inputDate = li.querySelector('input[type="date"]');
-                const btnLimapr = document.getElementById('btn-limpar');
 
                 if (inputText.disabled === true || inputDate.disabled === true) {
                     inputText.disabled = false;
                     inputDate.disabled = false;
                     icon.classList.replace('fa-pen-to-square', 'fa-check');
+                    inputText.style.textDecoration = '';
                 } else {
                     inputText.disabled = true;
                     inputDate.disabled = true;
                     icon.classList.replace('fa-check', 'fa-pen-to-square');
+                    if (li.parentNode.id === 'ul2') {
+                        inputText.style.textDecoration = 'line-through'
+                    }
                 }
             })
 
