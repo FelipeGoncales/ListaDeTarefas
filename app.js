@@ -76,9 +76,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const btnLimpar = document.getElementById('btn-limpar');
 
                 li.remove();
+                if (document.getElementById('ul2').children.length === 0) {
+                    addMensagem('ul2');
+                    btnLimpar.style.display = 'none';
+                }
                 if (ul.children.length === 0) {
                     addMensagem(ul.id);
-                    btnLimpar.style.display = 'none';
                 }
             })
 
