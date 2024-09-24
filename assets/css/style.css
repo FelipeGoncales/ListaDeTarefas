@@ -157,3 +157,22 @@ input {
     position: relative;
     left: 190px;
 }
+
+@media (max-width: 500px) {
+    * {
+        font-size: 18.5px;
+    }
+    .container {
+        max-width: 400px;
+        border-radius: 7px;
+        padding: 14px 18px;
+        gap: 12px;
+    }
+    #btn-limpar {
+        left: 170px;
+    }
+}
+
+@media (max-width: 426px) {
+    
+}

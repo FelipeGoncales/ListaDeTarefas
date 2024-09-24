@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
             textInput.type = 'text';
             textInput.value = nome;
             textInput.disabled = true;
+            textInput.maxLength = 30;
 
             const checkInput = document.createElement('input');
             checkInput.type = 'checkbox';
