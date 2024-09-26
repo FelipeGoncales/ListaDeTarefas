@@ -37,6 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const ulConcluidas = document.getElementById('ul2');
                 const li = this.parentNode;
 
+                desabilitarOutrosCheckInput('none');
+
                 const textInput = li.querySelector('input[type="text"');
                 const btnLimpar = document.getElementById('btn-limpar');
                 if (this.checked) {
@@ -65,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
 
             const dateInput = document.createElement('input');
-            dateInput.type = 'date';
+            dateInput.type = 'datetime-local';
             dateInput.value = data;
             dateInput.disabled = true;
 
@@ -91,23 +93,29 @@ document.addEventListener('DOMContentLoaded', () => {
             editIcon.addEventListener('click', function() {
                 const icon = this;
                 const li = icon.parentNode;
+                const ul = li.parentNode;
                 const inputText = li.querySelector('input[type="text"]');
-                const inputDate = li.querySelector('input[type="date"]');
+                const inputDate = li.querySelector('input[type="datetime-local"]');
+                const checkInput = li.querySelector('input[type="checkbox"]')
+
+                desabilitarOutrosCheckInput(li);
 
                 if (inputText.disabled === true || inputDate.disabled === true) {
                     inputText.disabled = false;
                     inputDate.disabled = false;
                     icon.classList.replace('fa-pen-to-square', 'fa-check');
                     inputText.style.textDecoration = '';
+                    checkInput.disabled = true;
                 } else {
                     inputText.disabled = true;
                     inputDate.disabled = true;
                     icon.classList.replace('fa-check', 'fa-pen-to-square');
+                    checkInput.disabled = false;
                     if (li.parentNode.id === 'ul2') {
                         inputText.style.textDecoration = 'line-through'
                     }
                 }
-            })
+            });
 
             li.classList.add('container');
             li.append(checkInput, textInput, dateInput, editIcon, lixeiraIcon);
@@ -127,6 +135,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+function desabilitarOutrosCheckInput(liAtual) {
+    const allLi = document.body.querySelectorAll('li');
+    allLi.forEach(li => {
+        if (li !== liAtual) {
+            const dateInput = li.querySelector('input[type="datetime-local"]');
+            const textInput = li.querySelector('input[type="text"]');
+            const checkInput = li.querySelector('input[type="checkbox"]')
+            const editIcon = li.querySelector('.fa-pen-to-square, .fa-check')
+
+            if (dateInput || textInput.disabled === false) {
+                dateInput.disabled = true;
+                textInput.disabled = true;
+                checkInput.disabled = false;
+                editIcon.classList.replace('fa-check', 'fa-pen-to-square')
+            }
+        }
+    })
+}
 
 function removeMensagem(ulId) {
     const ul = document.getElementById(ulId);
