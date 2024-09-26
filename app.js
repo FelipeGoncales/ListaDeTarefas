@@ -143,11 +143,10 @@ document.addEventListener('DOMContentLoaded', () => {
         let corSecundaria = getComputedStyle(root).getPropertyValue('--cor-secundaria').trim();
         const corSecundariaHex = corSecundaria.startsWith('rgb') ? rgbParaHex(corSecundaria) : corSecundaria;
 
-        if (corSecundariaHex === '#FFFFFF') {
+        if (icon.classList.contains('fa-moon')) {
             icon.style.left = '100%';
             btnBg.style.paddingLeft = '8px';
             btnBg.style.paddingRight = '20px';
-            btnBg.style.borderRadius = '30px 0 0 30px';
             btnBg.innerHTML = 'Light mode';
             icon.classList.replace('fa-moon', 'fa-sun');
             btnBg.style.backgroundColor = '#FFFFFF';
@@ -155,30 +154,24 @@ document.addEventListener('DOMContentLoaded', () => {
             icon.style.backgroundColor = '#FFFFFF';
             icon.style.color = 'var(---cor-principal)'
 
-            root.style.setProperty('--cor-secundaria', '#000000');
+            root.style.setProperty('--cor-secundaria', '#16171b');
+            root.style.setProperty('--bg-color', '#252529');
+            root.style.setProperty('--cor-texto', '#FFFFFF')
+        } else {
+            icon.style.left = '0%';
+            btnBg.style.paddingRight = '8px';
+            btnBg.style.paddingLeft = '20px';
+            btnBg.innerHTML = 'Dark mode';
+            icon.classList.replace('fa-sun', 'fa-moon');
+            btnBg.style.backgroundColor = 'var(--cor-principal)';
+            btnBg.style.color = '#FFFFFF';
+            icon.style.backgroundColor = 'var(--cor-principal)';
+            icon.style.color = '#FFFFFF'
+
+            root.style.setProperty('--cor-secundaria', '#ffffff');
             root.style.setProperty('--bg-color', '#f6f6f6');
+            root.style.setProperty('--cor-texto', '#000000')
         }
-
-        root.style.setProperty('--cor-principal', '#0f0139');
-        root.style.setProperty('--cor-secundaria', '#FFFFFF');
-        root.style.setProperty('--bg-color', '#f6f6f6');
-
-
-
-
-        /* Cor Claro
-            --cor-principal: #0f0139;
-            --cor-secundaria: #ffffff;
-            --cor-texto: #000000;
-            --bg-color: #f4f4f4;
-        */
-
-        /* Cor escuro
-            --cor-principal: #0f0139;
-            --cor-secundaria: #2a2929;
-            --cor-texto: #FFFFFF;
-            --bg-color: #313131;
-        */
     })
 });
 

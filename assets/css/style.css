@@ -21,6 +21,7 @@ body {
     background-color: var(--bg-color);
     padding-bottom: 50px;
     overflow-y: scroll;
+    transition: 0.1s;
 } 
 
 p, h1, h2, h3, input {
@@ -100,13 +101,15 @@ ul {
 #btn-submit {
     align-self: flex-end;
     font-size: 0.6rem;
-    background-color: var(--cor-principal);
-    color: white;
-    padding: 3px 6px;
+    color: var(--cor-texto);
+    padding: 5px 6px;
     border-radius: 7px;
-    border: 2px var(--cor-principal) solid;
+    border: 2px var(--cor-texto) solid;
     cursor: pointer;
-    transition: 0.1s;
+    transition: 0.2s;
+    &:hover {
+        scale: 1.1;
+    }
 }
 
 input {
@@ -119,6 +122,7 @@ input {
     }
     &[type='datetime-local'] {
         font-size: 0.63rem;
+        appearance: none;
     }
     &[type='checkbox'] {
         cursor: pointer;
@@ -126,11 +130,14 @@ input {
         border: 1px solid var(--cor-texto);
         border-radius: 50%;
         appearance: none;
+        &:disabled{
+            opacity: 0.3;
+        }
         &:checked {
             background-color: var(--cor-principal);
             &::after {
                 content: '✔';
-                font-size: 0.45rem;
+                font-size: 12px;
                 color: white;
                 position: absolute;
                 left: 53%;
@@ -146,9 +153,9 @@ input {
 
 .fa-trash-can, .fa-pen-to-square, .fa-check {
     font-size: 0.75rem;
-    transition: 0.2s;
     cursor: pointer;
     color: var(--cor-texto);
+    transition: scale 0.2s;
     &:hover {
         scale: 1.2;
     }
@@ -180,6 +187,68 @@ input {
     left: 205px;
 }
 
+.div-btn-bg {
+    position: absolute;
+    right: 55px;
+    top: 100px;
+    cursor: pointer;
+    color: #16171b;
+}
+
+
+#btn-dark-clear {
+    background-color: var(--cor-principal);
+    color: var(--cor-secundaria);
+    padding: 5px 8px;
+    padding-left: 20px;
+    border-radius: 30px;
+    font-size: 0.6rem;
+    transition: 0.2s;
+}
+
+.fa-moon, .fa-sun {
+    position: absolute;
+    border-radius: 50%;
+    padding: 5px;
+    width: 38px;
+    height: 38px;
+    background-color: var(--cor-principal);
+    color: var(--cor-secundaria);
+    left: 0%;
+    top: 50%;
+    translate: -50% -50%;
+    font-size: 28px;
+    transition: 0.3s;
+}
+
+.cortina {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.391);
+    width: 100vw;
+    height: 100vh;
+}
+
+.aba {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 15vw;
+    background-color: var(--cor-secundaria);
+}
+
+
+@media (max-width: 950px) {
+    .div-btn-bg {
+        position: static;
+    }
+}
+
+
 @media (max-width: 550px) {
     * {
         font-size: 18.5px;
@@ -208,8 +277,14 @@ input {
         margin-top: 30px;
     }
     #btn-submit {
-        color: var(--cor-texto);
-        background-color: var(--cor-principal);
+    border: 1px solid var(--cor-texto);
+    &:hover{
+        scale: 1;
+    }
+}
+        
+    .div-btn-bg {
+        scale: 80%;
     }
     .container {
         gap: 5px;
@@ -230,32 +305,4 @@ input {
     #btn-limpar {
         left: 127px;
     }
-}
-.div-btn-bg {
-    position: relative;
-    cursor: pointer;
-}
-
-#btn-dark-clear {
-    background-color: var(--cor-principal);
-    color: var(--cor-secundaria);
-    padding: 5px 8px;
-    padding-left: 20px;
-    border-radius: 0 30px 30px 0;
-    font-size: 0.7rem;
-    transition: 0.8s;
-}
-.fa-moon, .fa-sun {
-    position: absolute;
-    border-radius: 50%;
-    padding: 5px;
-    width: 38px;
-    height: 38px;
-    background-color: var(--cor-principal);
-    color: var(--cor-secundaria);
-    left: 0%;
-    top: 50%;
-    translate: -50% -50%;
-    font-size: 1.28rem;
-    transition: 0.6s;
 }
