@@ -134,6 +134,52 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    document.querySelector('.div-btn-bg').addEventListener('click', function() {
+        const icon = document.getElementById('iconMoonSun');
+        const btnBg = document.getElementById('btn-dark-clear');
+        const root = document.documentElement;
+
+        let corSecundaria = getComputedStyle(root).getPropertyValue('--cor-secundaria').trim();
+        const corSecundariaHex = corSecundaria.startsWith('rgb') ? rgbParaHex(corSecundaria) : corSecundaria;
+
+        if (corSecundariaHex === '#FFFFFF') {
+            icon.style.left = '100%';
+            btnBg.style.paddingLeft = '8px';
+            btnBg.style.paddingRight = '20px';
+            btnBg.style.borderRadius = '30px 0 0 30px';
+            btnBg.innerHTML = 'Light mode';
+            icon.classList.replace('fa-moon', 'fa-sun');
+            btnBg.style.backgroundColor = '#FFFFFF';
+            btnBg.style.color = 'var(--cor-principal)';
+            icon.style.backgroundColor = '#FFFFFF';
+            icon.style.color = 'var(---cor-principal)'
+
+            root.style.setProperty('--cor-secundaria', '#000000');
+            root.style.setProperty('--bg-color', '#f6f6f6');
+        }
+
+        root.style.setProperty('--cor-principal', '#0f0139');
+        root.style.setProperty('--cor-secundaria', '#FFFFFF');
+        root.style.setProperty('--bg-color', '#f6f6f6');
+
+
+
+
+        /* Cor Claro
+            --cor-principal: #0f0139;
+            --cor-secundaria: #ffffff;
+            --cor-texto: #000000;
+            --bg-color: #f4f4f4;
+        */
+
+        /* Cor escuro
+            --cor-principal: #0f0139;
+            --cor-secundaria: #2a2929;
+            --cor-texto: #FFFFFF;
+            --bg-color: #313131;
+        */
+    })
 });
 
 function desabilitarOutrosCheckInput(liAtual) {
