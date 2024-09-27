@@ -8,6 +8,8 @@
     box-sizing: border-box;
     font-size: 22px;
     border: none;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 :root {
@@ -114,7 +116,6 @@ ul {
 
 input {
     position: relative;
-    outline: none;
     font-size: 0.7rem;
     background-color: inherit;
     &[type='text'] {
@@ -291,7 +292,7 @@ input {
     }
         
     .div-btn-bg {
-        scale: 80%;
+        scale: 90%;
     }
     .container {
         gap: 5px;
