@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('selectstart', function(e) {
         e.preventDefault();
     });
+
+    
     const btnLimpar = document.getElementById('btn-limpar');
     btnLimpar.addEventListener('click', function() {
         const ulConcluidas = document.getElementById('ul2');
@@ -11,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         this.style.display = 'none';
         addMensagem(ulConcluidas.id);
+
+        salvarItens(2);
     })
 
     const btnSubmit = document.getElementById('btn-submit')
@@ -62,8 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     addMensagem(ulConcluidas.id)
                 } 
 
-                removeMensagem(ulTarefas.id);
-                removeMensagem(ulConcluidas.id);
+                removerMensagem(ulTarefas.id);
+                removerMensagem(ulConcluidas.id);
+
+                salvarItens(1);
+                salvarItens(2);
             })
 
             const dateInput = document.createElement('input');
@@ -86,6 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (ul.children.length === 0) {
                     addMensagem(ul.id);
                 }
+
+                let num = parseInt(ul.id.replace('ul',''))
+                salvarItens(num)
             })
 
             const editIcon = document.createElement('i');
@@ -132,7 +142,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 ul.style.display = 'flex';
                 seta1.style.transform = 'rotate(90deg)';
             }
-        }     
+
+            salvarItens(1);
+        }   
     });
 
     document.querySelector('.div-btn-bg').addEventListener('click', function() {
@@ -194,7 +206,7 @@ function desabilitarOutrosCheckInput(liAtual) {
     })
 }
 
-function removeMensagem(ulId) {
+function removerMensagem(ulId) {
     const ul = document.getElementById(ulId);
     const p = ul.querySelector('.mensagem-vazio');
     if (ul.children.length > 1 && p) {
@@ -242,8 +254,8 @@ function bandeja(n) {
     }
 }
 
-function salvarItensPendentes() {
-    const ul = document.getElementById('ul1');
+function salvarItens(ulID) {
+    const ul = document.getElementById('ul'+ulID);
     let tarefas = [];
 
     if (ul) {
@@ -252,22 +264,133 @@ function salvarItensPendentes() {
             const tarefaData = li.querySelector('input[type="datetime-local"]').value;
             tarefas.push({'texto': tarefaTexto, 'data': tarefaData});       
         })
-    
-        localStorage.setItem('tarefasPendentes', JSON.stringify(tarefas));
+        
+        if (ulID === 1) {
+            console.log('Tarefas pendentes salvas')
+            localStorage.setItem('tarefasPendentes', JSON.stringify(tarefas));
+        } else if (ulID === 2) {
+            console.log('Tarefas concluídas salvas')
+            localStorage.setItem('tarefasConcluídas', JSON.stringify(tarefas));
+        }
     }
 }
 
-function salvarItensConcluidos() {
-    const ul = document.getElementById('ul2');
-    let tarefas = [];
+function criarTarefa(ulID, texto, data) {
+    const ul = document.getElementById(ulID);
+    const li = document.createElement('li');
 
-    if (ul) {
-        ul.querySelectorAll('li').forEach(li => {
-            const tarefaTexto = li.querySelector('input[type="text"]').value;
-            const tarefaData = li.querySelector('input[type="datetime-local"]').value;
-            tarefas.push({'texto': tarefaTexto, 'data': tarefaData});
-        })
-    
-        localStorage.setItem('tarefasConcluidas', JSON.stringify(tarefas));
+    const textInput = document.createElement('input');
+    textInput.type = 'text';
+    textInput.value = texto;
+    textInput.disabled = true;
+    textInput.maxLength = 30;
+
+    const checkInput = document.createElement('input');
+    checkInput.type = 'checkbox';
+    checkInput.addEventListener('click', function() {
+        const ulTarefas = document.getElementById('ul1');
+        const ulConcluidas = document.getElementById('ul2');
+        const li = this.parentNode;
+
+        desabilitarOutrosCheckInput('none');
+
+        const textInput = li.querySelector('input[type="text"');
+        const btnLimpar = document.getElementById('btn-limpar');
+        if (this.checked) {
+            ulConcluidas.appendChild(li);
+            textInput.style.textDecoration = 'line-through';
+            if (ulConcluidas.style.display === 'flex') {
+                btnLimpar.style.display = 'block';
+            }
+        } else {
+            ulTarefas.appendChild(li);
+            textInput.style.textDecoration = '';
+            if (ulConcluidas.querySelectorAll('li').length === 0) {
+                btnLimpar.style.display = 'none';
+            }
+        }
+
+        if (ulTarefas.children.length === 0) {
+            addMensagem(ulTarefas.id);
+        }
+        if (ulConcluidas.children.length === 0) {
+            addMensagem(ulConcluidas.id)
+        } 
+
+        removerMensagem(ulTarefas.id);
+        removerMensagem(ulConcluidas.id);
+
+        salvarItens(1);
+        salvarItens(2);
+    })
+
+    const dateInput = document.createElement('input');
+    dateInput.type = 'datetime-local';
+    dateInput.value = data;
+    dateInput.disabled = true;
+
+    const lixeiraIcon = document.createElement('i');
+    lixeiraIcon.classList.add('fa-regular', "fa-trash-can");
+    lixeiraIcon.addEventListener("click", function() {
+        const li = this.parentNode;
+        const ul = li.parentNode;
+        const btnLimpar = document.getElementById('btn-limpar');
+
+        li.remove();
+        if (document.getElementById('ul2').children.length === 0) {
+            addMensagem('ul2');
+            btnLimpar.style.display = 'none';
+        }
+        if (ul.children.length === 0) {
+            addMensagem(ul.id);
+        }
+
+        let num = parseInt(ul.id.replace('ul',''))
+        salvarItens(num)
+    })
+
+    const editIcon = document.createElement('i');
+    editIcon.classList.add('fa-solid', 'fa-pen-to-square');
+    editIcon.addEventListener('click', function() {
+        const icon = this;
+        const li = icon.parentNode;
+        const ul = li.parentNode;
+        const inputText = li.querySelector('input[type="text"]');
+        const inputDate = li.querySelector('input[type="datetime-local"]');
+        const checkInput = li.querySelector('input[type="checkbox"]')
+
+        desabilitarOutrosCheckInput(li);
+
+        if (inputText.disabled === true || inputDate.disabled === true) {
+            inputText.disabled = false;
+            inputDate.disabled = false;
+            icon.classList.replace('fa-pen-to-square', 'fa-check');
+            inputText.style.textDecoration = '';
+            checkInput.disabled = true;
+        } else {
+            inputText.disabled = true;
+            inputDate.disabled = true;
+            icon.classList.replace('fa-check', 'fa-pen-to-square');
+            checkInput.disabled = false;
+            if (li.parentNode.id === 'ul2') {
+                inputText.style.textDecoration = 'line-through'
+            }
+        }
+    });
+
+    li.classList.add('container');
+    li.append(checkInput, textInput, dateInput, editIcon, lixeiraIcon);
+
+    ul.appendChild(li);
+
+    if (ul.firstElementChild.nodeName === 'P') {
+        ul.firstElementChild.remove();
+    }
+
+    const ulDisplay = window.getComputedStyle(ul).display;
+    const seta = document.getElementById('seta1');
+    if (ulDisplay == 'none') {
+        ul.style.display = 'flex';
+        seta1.style.transform = 'rotate(90deg)';
     }
 }
