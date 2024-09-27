@@ -122,7 +122,6 @@ input {
     }
     &[type='datetime-local'] {
         font-size: 0.63rem;
-        appearance: none;
     }
     &[type='checkbox'] {
         cursor: pointer;
