@@ -3,6 +3,16 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
     });
 
+    let tarefasPendentes = JSON.parse(localStorage.getItem('tarefasPendentes') || '[]');
+    let tarefasConcluidas = JSON.parse(localStorage.getItem('tarefasConcluidas') || '[]')
+
+    tarefasPendentes.forEach(li => {
+        criarTarefa('ul1', li.texto, li.data, false)
+    })
+
+    tarefasConcluidas.forEach(li => {
+        criarTarefa('ul2', li.texto, li.data, true)
+    })
     
     const btnLimpar = document.getElementById('btn-limpar');
     btnLimpar.addEventListener('click', function() {
@@ -16,6 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         salvarItens(2);
     })
+
+    document.getElementById('ul2').style.display = 'none';
 
     const btnSubmit = document.getElementById('btn-submit')
     btnSubmit.addEventListener('click', function() {
@@ -254,46 +266,27 @@ function bandeja(n) {
     }
 }
 
-function salvarItens(ulID) {
-    const ul = document.getElementById('ul'+ulID);
-    let tarefas = [];
 
-    if (ul) {
-        ul.querySelectorAll('li').forEach(li => {
-            const tarefaTexto = li.querySelector('input[type="text"]').value;
-            const tarefaData = li.querySelector('input[type="datetime-local"]').value;
-            tarefas.push({'texto': tarefaTexto, 'data': tarefaData});       
-        })
-        
-        if (ulID === 1) {
-            console.log('Tarefas pendentes salvas')
-            localStorage.setItem('tarefasPendentes', JSON.stringify(tarefas));
-        } else if (ulID === 2) {
-            console.log('Tarefas concluídas salvas')
-            localStorage.setItem('tarefasConcluídas', JSON.stringify(tarefas));
-        }
-    }
-}
-
-function criarTarefa(ulID, texto, data) {
+function criarTarefa(ulID, texto, data, checkInputCheck) {
     const ul = document.getElementById(ulID);
     const li = document.createElement('li');
-
+    
     const textInput = document.createElement('input');
     textInput.type = 'text';
     textInput.value = texto;
     textInput.disabled = true;
     textInput.maxLength = 30;
-
+    
     const checkInput = document.createElement('input');
     checkInput.type = 'checkbox';
+    checkInput.checked = checkInputCheck;
     checkInput.addEventListener('click', function() {
         const ulTarefas = document.getElementById('ul1');
         const ulConcluidas = document.getElementById('ul2');
         const li = this.parentNode;
-
+        
         desabilitarOutrosCheckInput('none');
-
+        
         const textInput = li.querySelector('input[type="text"');
         const btnLimpar = document.getElementById('btn-limpar');
         if (this.checked) {
@@ -309,33 +302,33 @@ function criarTarefa(ulID, texto, data) {
                 btnLimpar.style.display = 'none';
             }
         }
-
+        
         if (ulTarefas.children.length === 0) {
             addMensagem(ulTarefas.id);
         }
         if (ulConcluidas.children.length === 0) {
             addMensagem(ulConcluidas.id)
         } 
-
+        
         removerMensagem(ulTarefas.id);
         removerMensagem(ulConcluidas.id);
-
+        
         salvarItens(1);
         salvarItens(2);
     })
-
+    
     const dateInput = document.createElement('input');
     dateInput.type = 'datetime-local';
     dateInput.value = data;
     dateInput.disabled = true;
-
+    
     const lixeiraIcon = document.createElement('i');
     lixeiraIcon.classList.add('fa-regular', "fa-trash-can");
     lixeiraIcon.addEventListener("click", function() {
         const li = this.parentNode;
         const ul = li.parentNode;
         const btnLimpar = document.getElementById('btn-limpar');
-
+        
         li.remove();
         if (document.getElementById('ul2').children.length === 0) {
             addMensagem('ul2');
@@ -344,11 +337,11 @@ function criarTarefa(ulID, texto, data) {
         if (ul.children.length === 0) {
             addMensagem(ul.id);
         }
-
+        
         let num = parseInt(ul.id.replace('ul',''))
         salvarItens(num)
     })
-
+    
     const editIcon = document.createElement('i');
     editIcon.classList.add('fa-solid', 'fa-pen-to-square');
     editIcon.addEventListener('click', function() {
@@ -358,9 +351,9 @@ function criarTarefa(ulID, texto, data) {
         const inputText = li.querySelector('input[type="text"]');
         const inputDate = li.querySelector('input[type="datetime-local"]');
         const checkInput = li.querySelector('input[type="checkbox"]')
-
+        
         desabilitarOutrosCheckInput(li);
-
+        
         if (inputText.disabled === true || inputDate.disabled === true) {
             inputText.disabled = false;
             inputDate.disabled = false;
@@ -377,20 +370,41 @@ function criarTarefa(ulID, texto, data) {
             }
         }
     });
-
+    
     li.classList.add('container');
     li.append(checkInput, textInput, dateInput, editIcon, lixeiraIcon);
-
+    
     ul.appendChild(li);
-
+    
     if (ul.firstElementChild.nodeName === 'P') {
         ul.firstElementChild.remove();
     }
-
+    
     const ulDisplay = window.getComputedStyle(ul).display;
     const seta = document.getElementById('seta1');
     if (ulDisplay == 'none') {
         ul.style.display = 'flex';
         seta1.style.transform = 'rotate(90deg)';
+    }
+}
+
+function salvarItens(ulID) {
+    const ul = document.getElementById('ul'+ulID);
+    let tarefas = [];
+
+    if (ul) {
+        ul.querySelectorAll('li').forEach(li => {
+            const tarefaTexto = li.querySelector('input[type="text"]').value;
+            const tarefaData = li.querySelector('input[type="datetime-local"]').value;
+            tarefas.push({'texto': tarefaTexto, 'data': tarefaData});       
+        })
+        
+        if (ulID === 1) {
+            console.log('Tarefas pendentes salvas')
+            localStorage.setItem('tarefasPendentes', JSON.stringify(tarefas));
+        } else if (ulID === 2) {
+            console.log('Tarefas concluídas salvas')
+            localStorage.setItem('tarefasConcluidas', JSON.stringify(tarefas));
+        }
     }
 }
