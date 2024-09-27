@@ -126,7 +126,7 @@ input {
     }
     &[type='checkbox'] {
         cursor: pointer;
-        padding: 7px;
+        padding: 0.3rem;
         border: 1px solid var(--cor-texto);
         border-radius: 50%;
         appearance: none;
@@ -256,12 +256,6 @@ input {
     * {
         font-size: 18.5px;
     }
-    input[type='checkbox'] {
-        padding: 4px;
-        &:checked::after {
-            font-size: 10px;
-        }
-    }
     .container {
         max-width: 400px;
         border-radius: 7px;
@@ -277,7 +271,6 @@ input {
     * {
         font-size: 16px;
     }
-
     .container {
         max-width: 340px;
         padding: 10px;
