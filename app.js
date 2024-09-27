@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     const btnSubmit = document.getElementById('btn-submit')
-    btnSubmit.addEventListener('click', () => {
+    btnSubmit.addEventListener('click', function() {
         const nome = document.getElementById('text-input').value.trim();
         const data = document.getElementById('date-input').value.trim();
         
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ul.style.display = 'flex';
                 seta1.style.transform = 'rotate(90deg)';
             }
-        }
+        }     
     });
 
     document.querySelector('.div-btn-bg').addEventListener('click', function() {
@@ -239,5 +239,35 @@ function bandeja(n) {
             ul.style.display = 'none';
             seta.style.transform = 'rotate(0)';
         }
+    }
+}
+
+function salvarItensPendentes() {
+    const ul = document.getElementById('ul1');
+    let tarefas = [];
+
+    if (ul) {
+        ul.querySelectorAll('li').forEach(li => {
+            const tarefaTexto = li.querySelector('input[type="text"]').value;
+            const tarefaData = li.querySelector('input[type="datetime-local"]').value;
+            tarefas.push({'texto': tarefaTexto, 'data': tarefaData});       
+        })
+    
+        localStorage.setItem('tarefasPendentes', JSON.stringify(tarefas));
+    }
+}
+
+function salvarItensConcluidos() {
+    const ul = document.getElementById('ul2');
+    let tarefas = [];
+
+    if (ul) {
+        ul.querySelectorAll('li').forEach(li => {
+            const tarefaTexto = li.querySelector('input[type="text"]').value;
+            const tarefaData = li.querySelector('input[type="datetime-local"]').value;
+            tarefas.push({'texto': tarefaTexto, 'data': tarefaData});
+        })
+    
+        localStorage.setItem('tarefasConcluidas', JSON.stringify(tarefas));
     }
 }
