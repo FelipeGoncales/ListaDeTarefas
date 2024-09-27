@@ -29,6 +29,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('ul2').style.display = 'none';
 
+    if (localStorage.getItem('tema') === 'escuro') {
+        aplicarTemaEscuro();
+    } else {
+        aplicarTemaClaro();
+    }
+
     const btnSubmit = document.getElementById('btn-submit')
     btnSubmit.addEventListener('click', function() {
         const nome = document.getElementById('text-input').value.trim();
@@ -161,43 +167,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelector('.div-btn-bg').addEventListener('click', function() {
         const icon = document.getElementById('iconMoonSun');
-        const btnBg = document.getElementById('btn-dark-clear');
-        const root = document.documentElement;
-
-        let corSecundaria = getComputedStyle(root).getPropertyValue('--cor-secundaria').trim();
-        const corSecundariaHex = corSecundaria.startsWith('rgb') ? rgbParaHex(corSecundaria) : corSecundaria;
+        
 
         if (icon.classList.contains('fa-moon')) {
-            icon.style.left = '100%';
-            btnBg.style.paddingLeft = '8px';
-            btnBg.style.paddingRight = '20px';
-            btnBg.innerHTML = 'Light mode';
-            icon.classList.replace('fa-moon', 'fa-sun');
-            btnBg.style.backgroundColor = '#FFFFFF';
-            btnBg.style.color = 'var(--cor-principal)';
-            icon.style.backgroundColor = '#FFFFFF';
-            icon.style.color = 'var(---cor-principal)'
-
-            root.style.setProperty('--cor-secundaria', '#16171b');
-            root.style.setProperty('--bg-color', '#252529');
-            root.style.setProperty('--cor-texto', '#FFFFFF')
+            aplicarTemaEscuro();
         } else {
-            icon.style.left = '0%';
-            btnBg.style.paddingRight = '8px';
-            btnBg.style.paddingLeft = '20px';
-            btnBg.innerHTML = 'Dark mode';
-            icon.classList.replace('fa-sun', 'fa-moon');
-            btnBg.style.backgroundColor = 'var(--cor-principal)';
-            btnBg.style.color = '#FFFFFF';
-            icon.style.backgroundColor = 'var(--cor-principal)';
-            icon.style.color = '#FFFFFF'
-
-            root.style.setProperty('--cor-secundaria', '#ffffff');
-            root.style.setProperty('--bg-color', '#f6f6f6');
-            root.style.setProperty('--cor-texto', '#000000')
+            aplicarTemaClaro();
         }
     })
 });
+
+function aplicarTemaEscuro() {
+    const icon = document.getElementById('iconMoonSun');
+    const btnBg = document.getElementById('btn-tema');
+    const root = document.documentElement;
+
+    icon.style.left = '100%';
+    btnBg.style.paddingLeft = '8px';
+    btnBg.style.paddingRight = '20px';
+    btnBg.innerHTML = 'Light mode';
+    icon.classList.replace('fa-moon', 'fa-sun');
+    btnBg.style.backgroundColor = '#FFFFFF';
+    btnBg.style.color = 'var(--cor-principal)';
+    icon.style.backgroundColor = '#FFFFFF';
+    icon.style.color = 'var(---cor-principal)'
+
+    root.style.setProperty('--cor-secundaria', '#16171b');
+    root.style.setProperty('--bg-color', '#252529');
+    root.style.setProperty('--cor-texto', '#FFFFFF')
+
+    localStorage.setItem('tema', 'escuro')
+}
+
+function aplicarTemaClaro() {
+    const icon = document.getElementById('iconMoonSun');
+    const btnBg = document.getElementById('btn-tema');
+    const root = document.documentElement;
+
+    icon.style.left = '0%';
+    btnBg.style.paddingRight = '8px';
+    btnBg.style.paddingLeft = '20px';
+    btnBg.innerHTML = 'Dark mode';
+    icon.classList.replace('fa-sun', 'fa-moon');
+    btnBg.style.backgroundColor = 'var(--cor-principal)';
+    btnBg.style.color = '#FFFFFF';
+    icon.style.backgroundColor = 'var(--cor-principal)';
+    icon.style.color = '#FFFFFF'
+
+    root.style.setProperty('--cor-secundaria', '#ffffff');
+    root.style.setProperty('--bg-color', '#f6f6f6');
+    root.style.setProperty('--cor-texto', '#000000')
+
+    localStorage.setItem('tema', 'claro')
+}
 
 function desabilitarOutrosCheckInput(liAtual) {
     const allLi = document.body.querySelectorAll('li');

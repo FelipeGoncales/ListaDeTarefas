@@ -196,7 +196,7 @@ input {
 }
 
 
-#btn-dark-clear {
+#btn-tema {
     background-color: var(--cor-principal);
     color: var(--cor-secundaria);
     padding: 5px 8px;
