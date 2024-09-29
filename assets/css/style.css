@@ -274,6 +274,14 @@ input {
     #btn-limpar {
         left: 170px;
     }
+    input[type="checkbox"] {
+        &:hover::after {
+            font-size: 9px;
+        }
+        &:checked::after {
+            font-size:9px;
+        }
+    }
 }
 
 @media (max-width: 426px) {
