@@ -35,137 +35,21 @@ document.addEventListener('DOMContentLoaded', () => {
         aplicarTemaClaro();
     }
 
-    const btnSubmit = document.getElementById('btn-submit')
+    const btnSubmit = document.getElementById('btn-submit');
     btnSubmit.addEventListener('click', function() {
-        const nome = document.getElementById('text-input').value.trim();
-        const data = document.getElementById('date-input').value.trim();
-        
-        if (!nome || !data) {
-            alert('É necessário informar a data e título da tarefa para continuar');
-        } else {
-            const ul = document.getElementById('ul1');
-            const li = document.createElement('li');
+        const inputText = document.getElementById('text-input');
+        const inputDate = document.getElementById('date-input'); 
 
-            const textInput = document.createElement('input');
-            textInput.type = 'text';
-            textInput.value = nome;
-            textInput.disabled = true;
-            textInput.maxLength = 30;
+        if (!inputText.value || !inputDate.value) {
+            alert('Preencha todos os campos para adicionar uma tarefa');
+            return;
+        }
 
-            const checkInput = document.createElement('input');
-            checkInput.type = 'checkbox';
-            checkInput.addEventListener('click', function() {
-                const ulTarefas = document.getElementById('ul1');
-                const ulConcluidas = document.getElementById('ul2');
-                const li = this.parentNode;
+        criarTarefa('ul1', inputText.value.trim(), inputDate.value.trim(), false);
+        inputText.value = '';
+        inputDate.value = '';
 
-                desabilitarOutrosCheckInput('none');
-
-                const textInput = li.querySelector('input[type="text"');
-                const btnLimpar = document.getElementById('btn-limpar');
-                if (this.checked) {
-                    ulConcluidas.appendChild(li);
-                    textInput.style.textDecoration = 'line-through';
-                    if (ulConcluidas.style.display === 'flex') {
-                        btnLimpar.style.display = 'block';
-                    }
-                } else {
-                    ulTarefas.appendChild(li);
-                    textInput.style.textDecoration = '';
-                    if (ulConcluidas.querySelectorAll('li').length === 0) {
-                        btnLimpar.style.display = 'none';
-                    }
-                }
-
-                if (ulTarefas.children.length === 0) {
-                    addMensagem(ulTarefas.id);
-                }
-                if (ulConcluidas.children.length === 0) {
-                    addMensagem(ulConcluidas.id)
-                } 
-
-                removerMensagem(ulTarefas.id);
-                removerMensagem(ulConcluidas.id);
-
-                salvarItens(1);
-                salvarItens(2);
-            })
-
-            const dateInput = document.createElement('input');
-            dateInput.type = 'datetime-local';
-            dateInput.value = data;
-            dateInput.disabled = true;
-
-            const lixeiraIcon = document.createElement('i');
-            lixeiraIcon.classList.add('fa-regular', "fa-trash-can");
-            lixeiraIcon.addEventListener("click", function() {
-                const li = this.parentNode;
-                const ul = li.parentNode;
-                const btnLimpar = document.getElementById('btn-limpar');
-
-                li.remove();
-                if (document.getElementById('ul2').children.length === 0) {
-                    addMensagem('ul2');
-                    btnLimpar.style.display = 'none';
-                }
-                if (ul.children.length === 0) {
-                    addMensagem(ul.id);
-                }
-
-                let num = parseInt(ul.id.replace('ul',''))
-                salvarItens(num)
-            })
-
-            const editIcon = document.createElement('i');
-            editIcon.classList.add('fa-solid', 'fa-pen-to-square');
-            editIcon.addEventListener('click', function() {
-                const icon = this;
-                const li = icon.parentNode;
-                const ul = li.parentNode;
-                const inputText = li.querySelector('input[type="text"]');
-                const inputDate = li.querySelector('input[type="datetime-local"]');
-                const checkInput = li.querySelector('input[type="checkbox"]')
-
-                desabilitarOutrosCheckInput(li);
-
-                if (inputText.disabled === true || inputDate.disabled === true) {
-                    inputText.disabled = false;
-                    inputDate.disabled = false;
-                    icon.classList.replace('fa-pen-to-square', 'fa-check');
-                    inputText.style.textDecoration = '';
-                    checkInput.disabled = true;
-                } else {
-                    inputText.disabled = true;
-                    inputDate.disabled = true;
-                    icon.classList.replace('fa-check', 'fa-pen-to-square');
-                    checkInput.disabled = false;
-                    if (li.parentNode.id === 'ul2') {
-                        inputText.style.textDecoration = 'line-through'
-                    }
-                }
-            });
-
-            li.classList.add('container');
-            li.append(checkInput, textInput, dateInput, editIcon, lixeiraIcon);
-
-            ul.appendChild(li);
-
-            if (ul.firstElementChild.nodeName === 'P') {
-                ul.firstElementChild.remove();
-            }
-
-            const ulDisplay = window.getComputedStyle(ul).display;
-            const seta = document.getElementById('seta1');
-            if (ulDisplay == 'none') {
-                ul.style.display = 'flex';
-                seta1.style.transform = 'rotate(90deg)';
-            }
-
-            salvarItens(1);
-        } 
-        
-        document.getElementById('text-input').value = '';
-        document.getElementById('date-input').value = '';
+        salvarItens(1);
     });
 
     document.querySelector('.div-btn-bg').addEventListener('click', function() {
@@ -233,7 +117,7 @@ function desabilitarOutrosCheckInput(liAtual) {
             const checkInput = li.querySelector('input[type="checkbox"]')
             const editIcon = li.querySelector('.fa-pen-to-square, .fa-check')
 
-            if (dateInput || textInput.disabled === false) {
+            if (dateInput.disabled === false || textInput.disabled === false) {
                 dateInput.disabled = true;
                 textInput.disabled = true;
                 checkInput.disabled = false;
@@ -409,7 +293,7 @@ function criarTarefa(ulID, texto, data, checkInputCheck) {
     const seta = document.getElementById('seta1');
     if (ulDisplay == 'none') {
         ul.style.display = 'flex';
-        seta1.style.transform = 'rotate(90deg)';
+        seta.style.transform = 'rotate(90deg)';
     }
 }
 
