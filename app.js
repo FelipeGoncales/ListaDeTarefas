@@ -162,7 +162,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             salvarItens(1);
-        }   
+        } 
+        
+        document.getElementById('text-input').value = '';
+        document.getElementById('date-input').value = '';
     });
 
     document.querySelector('.div-btn-bg').addEventListener('click', function() {

@@ -133,6 +133,15 @@ input {
         &:disabled{
             opacity: 0.3;
         }
+        &:hover::after {
+            content: '✔';
+            font-size: 12px;
+            color: var(--cor-texto);
+            position: absolute;
+            left: 53%;
+            top: 45%;
+            transform: translate(-50%, -50%);
+        }
         &:checked {
             background-color: var(--cor-principal);
             &::after {
